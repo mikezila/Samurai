@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,6 +46,7 @@
             this.rendererToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gDIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileBox = new System.Windows.Forms.OpenFileDialog();
+            this.gameTimer = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -140,6 +142,7 @@
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // toolStripSeparator2
             // 
@@ -165,6 +168,11 @@
             // openFileBox
             // 
             this.openFileBox.FileName = "openFileDialog1";
+            // 
+            // gameTimer
+            // 
+            this.gameTimer.Interval = 16;
+            this.gameTimer.Tick += new System.EventHandler(this.gameTimer_Tick);
             // 
             // MainForm
             // 
@@ -203,6 +211,7 @@
         private System.Windows.Forms.ToolStripMenuItem rendererToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem gDIToolStripMenuItem;
         private System.Windows.Forms.OpenFileDialog openFileBox;
+        private System.Windows.Forms.Timer gameTimer;
     }
 }
 

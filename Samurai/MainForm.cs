@@ -27,7 +27,16 @@ namespace Samurai
             openFileBox.ShowDialog();
             openFileBox.Multiselect = false;
             Console.WriteLine(openFileBox.FileName);
-            
+        }
+
+        private void gameTimer_Tick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new About().ShowDialog();
         }
     }
 }
