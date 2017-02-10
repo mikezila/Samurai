@@ -12,7 +12,6 @@ namespace Samurai
         Chip8GPU GPU;
 
         // Handy flags
-        bool gameLoaded;
         bool crashed;
 
         // Registers
@@ -135,7 +134,6 @@ namespace Samurai
             GPU.Reset();
 
             // Handy Flags
-            gameLoaded = false;
             crashed = false;
 
             // Registers
@@ -160,7 +158,6 @@ namespace Samurai
         {
             Reset();
             MMU.LoadROM(path);
-            gameLoaded = true;
         }
 
         public void Step()

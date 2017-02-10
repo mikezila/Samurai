@@ -12,7 +12,7 @@ namespace Samurai
 {
     public partial class MainForm : Form
     {
-        int scaleFactor = 8;
+        const int scaleFactor = 8;
 
         Chip8CPU CPU;
         Debugger debugger;
@@ -21,7 +21,7 @@ namespace Samurai
         public MainForm()
         {
             InitializeComponent();
-            ClientSize = new Size(Chip8GPU.ScreenWidth, Chip8GPU.ScreenHeight).Scale(scaleFactor);
+            ClientSize = new Size(Chip8GPU.ScreenWidth * scaleFactor, (Chip8GPU.ScreenHeight * scaleFactor) + 24);
             CPU = new Chip8CPU(new Chip8MMU(), new Chip8GPU());
             g = CreateGraphics();
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
@@ -41,6 +41,7 @@ namespace Samurai
             openFileBox.ShowDialog();
             CPU.LoadROM(openFileBox.FileName);
             debugger.UpdateDebugger();
+            gameTimer.Enabled = true;
         }
 
         private void gameTimer_Tick(object sender, EventArgs e)
@@ -50,8 +51,13 @@ namespace Samurai
                 gameTimer.Enabled = false;
                 return;
             }
+            SystemStep();
+        }
+
+        public void SystemStep()
+        {
             CPU.Step();
-            g.DrawImage(CPU.FrameBuffer, new Point(30, 30));
+            g.DrawImage(CPU.FrameBuffer, 0, 24, Chip8GPU.ScreenWidth * scaleFactor, Chip8GPU.ScreenHeight * scaleFactor);
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)

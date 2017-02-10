@@ -14,7 +14,7 @@ namespace Samurai
         public static int ScreenHeight { get; } = 32;
 
         // Raw pixels
-        byte[,] pixels;
+        bool[,] pixels;
 
         // Drawable framebuffer
         public Bitmap FrameBuffer { get; private set; }
@@ -31,25 +31,33 @@ namespace Samurai
         public void Reset()
         {
             FrameBuffer = new Bitmap(ScreenWidth, ScreenHeight);
-            pixels = new byte[ScreenWidth, ScreenHeight];
+            pixels = new bool[ScreenWidth, ScreenHeight];
         }
 
         public bool DrawSprites(int x, int y, byte[] sprites)
         {
+            bool collision = false;
+
+            for (int sprite = 0; sprite < sprites.Length; sprite++)
+                for (int bit = 0; bit < 8; bit++)
+                {
+                    pixels[(x + bit) % ScreenWidth, (y + sprite) % ScreenHeight] = ((sprites[sprite] >> (7 - bit)) & 0x1) == 1;
+                }
+
             UpdateFrameBuffer();
-            return false;
+            return collision;
         }
 
         private void UpdateFrameBuffer()
         {
             for (int x = 0; x < ScreenWidth; x++)
                 for (int y = 0; y < ScreenHeight; y++)
-                    FrameBuffer.SetPixel(x, y, pixels[x, y] == 1 ? onColor : offColor);
+                    FrameBuffer.SetPixel(x, y, pixels[x, y] ? onColor : offColor);
         }
 
         internal void Clear()
         {
-            pixels = new byte[ScreenWidth, ScreenHeight];
+            pixels = new bool[ScreenWidth, ScreenHeight];
         }
     }
 }
