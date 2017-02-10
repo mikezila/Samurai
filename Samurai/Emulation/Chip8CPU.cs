@@ -201,6 +201,7 @@ namespace Samurai
             // 0nnn - SYS addr
             if ((opcode & 0xF000) == 0x0000)
             {
+                crashed = true;
                 throw new NotImplementedException("Machine code routines are not supported.");
             }
 
@@ -340,10 +341,140 @@ namespace Samurai
                 return;
             }
 
+            // 9xy0 - SNE Vx, Vy
+            // Skip next instruction if Vx != Vy.
+            if ((opcode & 0xF00F) == 0x9000)
+            {
+                if (registers[opcode.RegisterX()] != registers[opcode.RegisterY()])
+                    pc += 2;
+                return;
+            }
+
+            // Annn - LD I, addr
+            // Set I = nnn.
+            if ((opcode & 0xF000) == 0xA000)
+            {
+                indexer = (ushort)(opcode & 0x0FFF);
+                return;
+            }
+
+            // Bnnn - JP V0, addr
+            // Jump to location nnn +V0
+            if ((opcode & 0xF000) == 0xB000)
+            {
+                pc = (ushort)(registers[0] + (opcode & 0x0FFF));
+                return;
+            }
+
+            // Cxkk - RND Vx, byte
+            // Set Vx = random byte AND k
+            if ((opcode & 0xF000) == 0xC000)
+            {
+                registers[opcode.RegisterX()] = (byte)(rand.Next(0, 256) & (opcode & 0x00FF));
+                return;
+            }
+
+            // Dxyn - DRW Vx, Vy, nibble
+            // Display n-byte sprite starting at memory location I at(Vx, Vy)
+            // set VF = collision.
+            if ((opcode & 0xF000) == 0xD000)
+            {
+                byte[] sprites = new byte[opcode & 0xF];
+                for (int i = 0; i < (opcode & 0xF); i++)
+                    sprites[i] = MMU.ReadByte((ushort)(indexer + i));
+                GPU.DrawSprites(registers[opcode.RegisterX()], registers[opcode.RegisterY()], sprites);
+                return;
+            }
+
+            // Ex9E - SKP Vx
+            // Skip next instruction if key with the value of Vx is pressed.
+            if ((opcode & 0xF0FF) == 0xE09E)
+            {
+                if (keypad[registers[opcode.RegisterX()]])
+                    pc += 2;
+                return;
+            }
+
+            // ExA1 - SKNP Vx
+            // Skip next instruction if key with the value of Vx is not pressed.
+            if ((opcode & 0xF0FF) == 0xE0A1)
+            {
+                if (!keypad[registers[opcode.RegisterX()]])
+                    pc += 2;
+                return;
+            }
+
+            // Fx07 - LD Vx, DT
+            // Set Vx = delay timer value.
+            if ((opcode & 0xF0FF) == 0xF007)
+            {
+                registers[opcode.RegisterX()] = delay;
+            }
+
+            // Fx0A - LD Vx, K
+            // Wait for a key press, store the value of the key in Vx.
+            if ((opcode & 0xF0FF) == 0xF00A)
+            {
+                throw new NotImplementedException("Keypad isn't working yet.");
+            }
+
+            // Fx15 - LD DT, Vx
+            // Set delay timer = Vx.
+            if ((opcode & 0xF0FF) == 0xF015)
+            {
+                delay = registers[opcode.RegisterX()];
+                return;
+            }
+
+            // Fx18 - LD ST, Vx
+            // Set sound timer = Vx.
+            if ((opcode & 0xF0FF) == 0xF018)
+            {
+                sound = registers[opcode.RegisterX()];
+                return;
+            }
+
+            // Fx1E - ADD I, Vx
+            // Set I = I + Vx.
+            if ((opcode & 0xF0FF) == 0xF01E)
+            {
+                indexer += registers[opcode.RegisterX()];
+                return;
+            }
+
+            // Fx29 - LD F, Vx
+            // Set I = location of sprite for digit Vx.
+            if ((opcode & 0xF0FF) == 0xF029)
+            {
+                throw new NotImplementedException("Digit sprites not in just yet.");
+            }
+
+            // Fx33 - LD B, Vx
+            // Store BCD representation of Vx in memory locations I, I + 1, and I+2.
+            if ((opcode & 0xF0FF) == 0xF033)
+            {
+                throw new NotImplementedException("BCD not implemented.");
+            }
+
+            // Fx55 - LD [I], Vx
+            // Store registers V0 through Vx in memory starting at location I.
+            if ((opcode & 0xF0FF) == 0xF055)
+            {
+                for (int i = 0; i < (opcode.RegisterX()); i++)
+                    MMU.WriteByte(indexer, registers[i]);
+            }
+
+            // Fx65 - LD Vx, [I]
+            // Read registers V0 through Vx from memory starting at location I.
+            if ((opcode & 0xF0FF) == 0xF065)
+            {
+                for (int i = 0; i < (opcode.RegisterX()); i++)
+                    registers[i] = MMU.ReadByte(indexer);
+            }
+
             // We've received an unknown opcode
             crashed = true;
         }
-
         #endregion
     }
 }
