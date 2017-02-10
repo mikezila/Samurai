@@ -155,6 +155,7 @@ namespace Samurai
 
         public void LoadROM(string path)
         {
+            Reset();
             MMU.LoadROM(path);
             gameLoaded = true;
         }
@@ -186,27 +187,27 @@ namespace Samurai
             // Clear Display
             if (opcode == 0x00E0)
             {
-                ClearScreen();
+                GPU.Clear();
                 return;
             }
 
             // Return from subroutine
             if (opcode == 0x00EE)
             {
-                ReturnFromSubroutine();
+                pc = stack.Pop();
                 return;
             }
 
             // Call machine code routine
             if ((opcode & 0xF000) == 0x0000)
             {
-                CallMachineRoutine((ushort)(opcode & 0x0FFF));
+                throw new NotImplementedException("Machine code routines are not supported.");
             }
 
             // Jump to location
             if ((opcode & 0xF000) == 0x1000)
             {
-                UnconditionalJump((ushort)(opcode & 0x0FFF));
+                pc = (ushort)(opcode & 0x0FFF);
                 return;
             }
 
@@ -220,7 +221,7 @@ namespace Samurai
             // Skip next if register is the same as given byte
             if ((opcode & 0xF000) == 0x3000)
             {
-                if (registers[opcode & 0x0F00] == (opcode & 0x00FF))
+                if (registers[opcode.RegisterX()] == (opcode & 0x00FF))
                     pc += 2;
                 return;
             }
@@ -228,7 +229,7 @@ namespace Samurai
             // Skip next if register is not the same as given byte
             if ((opcode & 0xF000) == 0x4000)
             {
-                if (registers[opcode & 0x0F00] != (opcode & 0x00FF))
+                if (registers[opcode.RegisterX()] != (opcode & 0x00FF))
                     pc += 2;
                 return;
             }
@@ -236,14 +237,68 @@ namespace Samurai
             // Skip next if registers are equal
             if ((opcode & 0xF000) == 0x5000)
             {
-                if (registers[opcode & 0x0F00] == registers[opcode & 0x00F0])
+                if (registers[opcode.RegisterX()] == registers[opcode.RegisterY()])
                     pc += 2;
                 return;
             }
 
+            // Skip next if registers are not equal
+            if ((opcode & 0xF000) == 0x6000)
+            {
+                if (registers[opcode.RegisterX()] != registers[opcode.RegisterY()])
+                    pc += 2;
+                return;
+            }
+
+            // 7xkk - ADD Vx, byte
+            // Set Vx = Vx + kk.
+            if ((opcode & 0xF000) == 0x7000)
+            {
+                registers[opcode.RegisterX()] += (byte)(opcode & 0x00FF);
+                return;
+            }
+
+            // 8xy0 - LD Vx, Vy
+            // Set Vx = Vy.
+            if ((opcode & 0xF00F) == 0x8000)
+            {
+                LoadRegisterFromRegister(opcode & 0x0F00, opcode & 0x00F0);
+                return;
+            }
+
+            // 8xy1 - OR Vx, Vy
+            // Set Vx = Vx OR Vy.
+            if ((opcode & 0xF00F) == 0x8001)
+            {
+                registers[opcode.RegisterX()] = (byte)(registers[opcode.RegisterX()] | registers[opcode.RegisterY()]);
+                return;
+            }
+
+            // 8xy2 - AND Vx, Vy
+            // Set Vx = Vx AND Vy.
+            if ((opcode & 0xF00F) == 0x8002)
+            {
+                registers[opcode.RegisterX()] = (byte)(registers[opcode.RegisterX()] & registers[opcode.RegisterY()]);
+                return;
+            }
+
+            // 8xy3 - XOR Vx, Vy
+            // Set Vx = Vx XOR Vy.
+            if ((opcode & 0xF00F) == 0x8003)
+            {
+                registers[opcode.RegisterX()] = (byte)(registers[opcode.RegisterX()] ^ registers[opcode.RegisterY()]);
+                return;
+            }
+
+            // 8xy4 - ADD Vx, Vy
+            // Set Vx = Vx + Vy, set VF = carry.
+            if ((opcode & 0xF00F) == 0x8004)
+            {
+                int result = registers[opcode.RegisterX()] + registers[opcode.RegisterY()];
+            }
+
             // We've received an unknown opcode
             crashed = true;
-
         }
 
         #endregion
@@ -295,6 +350,11 @@ namespace Samurai
         private void LoadRegister(int register, byte data)
         {
             registers[register] = data;
+        }
+
+        private void LoadRegisterFromRegister(int destination, int source)
+        {
+            registers[destination] += registers[source];
         }
 
         private void AddByteToRegister(int register, byte data)

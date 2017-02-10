@@ -34,12 +34,13 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.optionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rendererToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gDIToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openGLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.direct3DToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dfxGlideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.displaySizeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.normalToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.largeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,9 +54,6 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileBox = new System.Windows.Forms.OpenFileDialog();
             this.gameTimer = new System.Windows.Forms.Timer(this.components);
-            this.openGLToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.direct3DToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dfxGlideToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -77,8 +75,6 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             this.toolStripSeparator3,
-            this.resetToolStripMenuItem,
-            this.toolStripSeparator1,
             this.exitToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
@@ -95,18 +91,6 @@
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             this.toolStripSeparator3.Size = new System.Drawing.Size(149, 6);
-            // 
-            // resetToolStripMenuItem
-            // 
-            this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.resetToolStripMenuItem.Text = "Reset";
-            this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator1
-            // 
-            this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // exitToolStripMenuItem
             // 
@@ -144,6 +128,27 @@
             this.gDIToolStripMenuItem.Name = "gDIToolStripMenuItem";
             this.gDIToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.gDIToolStripMenuItem.Text = "GDI+";
+            // 
+            // openGLToolStripMenuItem
+            // 
+            this.openGLToolStripMenuItem.Enabled = false;
+            this.openGLToolStripMenuItem.Name = "openGLToolStripMenuItem";
+            this.openGLToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openGLToolStripMenuItem.Text = "OpenGL";
+            // 
+            // direct3DToolStripMenuItem
+            // 
+            this.direct3DToolStripMenuItem.Enabled = false;
+            this.direct3DToolStripMenuItem.Name = "direct3DToolStripMenuItem";
+            this.direct3DToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.direct3DToolStripMenuItem.Text = "Direct3D";
+            // 
+            // dfxGlideToolStripMenuItem
+            // 
+            this.dfxGlideToolStripMenuItem.Enabled = false;
+            this.dfxGlideToolStripMenuItem.Name = "dfxGlideToolStripMenuItem";
+            this.dfxGlideToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dfxGlideToolStripMenuItem.Text = "3dfx Glide";
             // 
             // displaySizeToolStripMenuItem
             // 
@@ -209,18 +214,18 @@
             // controlsToolStripMenuItem
             // 
             this.controlsToolStripMenuItem.Name = "controlsToolStripMenuItem";
-            this.controlsToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.controlsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.controlsToolStripMenuItem.Text = "Controls";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(116, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -233,27 +238,6 @@
             this.gameTimer.Enabled = true;
             this.gameTimer.Interval = 16;
             this.gameTimer.Tick += new System.EventHandler(this.gameTimer_Tick);
-            // 
-            // openGLToolStripMenuItem
-            // 
-            this.openGLToolStripMenuItem.Enabled = false;
-            this.openGLToolStripMenuItem.Name = "openGLToolStripMenuItem";
-            this.openGLToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.openGLToolStripMenuItem.Text = "OpenGL";
-            // 
-            // direct3DToolStripMenuItem
-            // 
-            this.direct3DToolStripMenuItem.Enabled = false;
-            this.direct3DToolStripMenuItem.Name = "direct3DToolStripMenuItem";
-            this.direct3DToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.direct3DToolStripMenuItem.Text = "Direct3D";
-            // 
-            // dfxGlideToolStripMenuItem
-            // 
-            this.dfxGlideToolStripMenuItem.Enabled = false;
-            this.dfxGlideToolStripMenuItem.Name = "dfxGlideToolStripMenuItem";
-            this.dfxGlideToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.dfxGlideToolStripMenuItem.Text = "3dfx Glide";
             // 
             // MainForm
             // 
@@ -279,7 +263,6 @@
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem debugToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem debuggerToolStripMenuItem;
@@ -297,7 +280,6 @@
         private System.Windows.Forms.ToolStripMenuItem largeToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem soundToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripMenuItem openGLToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem direct3DToolStripMenuItem;

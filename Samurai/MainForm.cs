@@ -35,14 +35,11 @@ namespace Samurai
             openFileBox.Multiselect = false;
             openFileBox.ShowDialog();
             CPU.LoadROM(openFileBox.FileName);
+            debugger.UpdateDebugger();
         }
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-            if (debugger.Visible)
-            {
-
-            }
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -60,13 +57,6 @@ namespace Samurai
             else
                 debugger.Hide();
             Focus();
-        }
-
-        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            CPU.Reset();
-            if (openFileBox.FileName != null)
-                CPU.LoadROM(openFileBox.FileName);
         }
     }
 }

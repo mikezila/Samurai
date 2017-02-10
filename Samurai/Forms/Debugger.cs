@@ -24,7 +24,7 @@ namespace Samurai
             Hide();
         }
 
-        private void UpdateDebugger()
+        public void UpdateDebugger()
         {
             memoryDumpListbox.DataSource = CPU.MMUState;
             memoryDumpListbox.SelectedIndex = CPU.PC;

@@ -94,9 +94,8 @@
             this.cpuStateLabel.Font = new System.Drawing.Font("Courier New", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cpuStateLabel.Location = new System.Drawing.Point(6, 16);
             this.cpuStateLabel.Name = "cpuStateLabel";
-            this.cpuStateLabel.Size = new System.Drawing.Size(80, 16);
+            this.cpuStateLabel.Size = new System.Drawing.Size(0, 16);
             this.cpuStateLabel.TabIndex = 0;
-            this.cpuStateLabel.Text = "CPU STATE";
             // 
             // stackListBox
             // 
@@ -192,7 +191,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(550, 483);
+            this.ClientSize = new System.Drawing.Size(546, 479);
             this.ControlBox = false;
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.updateButton);
