@@ -184,37 +184,38 @@ namespace Samurai
                 return;
             }
 
-            // Clear Display
+            // 00E0 - CLS
             if (opcode == 0x00E0)
             {
                 GPU.Clear();
                 return;
             }
 
-            // Return from subroutine
+            // 00EE - RET
             if (opcode == 0x00EE)
             {
                 pc = stack.Pop();
                 return;
             }
 
-            // Call machine code routine
+            // 0nnn - SYS addr
             if ((opcode & 0xF000) == 0x0000)
             {
                 throw new NotImplementedException("Machine code routines are not supported.");
             }
 
-            // Jump to location
+            // 1nnn - JP addr
             if ((opcode & 0xF000) == 0x1000)
             {
                 pc = (ushort)(opcode & 0x0FFF);
                 return;
             }
 
-            // Call subroutine
+            // 2nnn - CALL addr
             if ((opcode & 0xF000) == 0x2000)
             {
-                CallSubroutine((ushort)(opcode & 0x0FFF));
+                stack.Push(pc);
+                pc = (ushort)(opcode & 0x0FFF);
                 return;
             }
 
@@ -262,7 +263,7 @@ namespace Samurai
             // Set Vx = Vy.
             if ((opcode & 0xF00F) == 0x8000)
             {
-                LoadRegisterFromRegister(opcode & 0x0F00, opcode & 0x00F0);
+                registers[opcode.RegisterX()] = registers[opcode.RegisterY()];
                 return;
             }
 
@@ -295,185 +296,51 @@ namespace Samurai
             if ((opcode & 0xF00F) == 0x8004)
             {
                 int result = registers[opcode.RegisterX()] + registers[opcode.RegisterY()];
+                flag = result > 255;
+                registers[opcode.RegisterX()] = (byte)result;
+                return;
+            }
+
+            // 8xy5 - SUB Vx, Vy
+            // Set Vx = Vx - Vy, set VF = NOT borrow.
+            if ((opcode & 0xF00F) == 0x8005)
+            {
+                flag = registers[opcode.RegisterX()] > registers[opcode.RegisterY()];
+                registers[opcode.RegisterX()] = (byte)(registers[opcode.RegisterX()] - registers[opcode.RegisterY()]);
+                return;
+            }
+
+            // 8xy6 - SHR Vx {, Vy}
+            // Set Vx = Vx SHR 1.
+            if ((opcode & 0xF00F) == 0x8006)
+            {
+                flag = (registers[opcode.RegisterX()] & 0x1) == 1;
+                registers[opcode.RegisterX()] = (byte)(registers[opcode.RegisterX()] >> 1);
+                return;
+            }
+
+            // 8xy7 - SUBN Vx, Vy
+            // Set Vx = Vy - Vx, set VF = NOT borrow.
+            if ((opcode & 0xF00F) == 0x8007)
+            {
+                flag = registers[opcode.RegisterX()] < registers[opcode.RegisterY()];
+                registers[opcode.RegisterX()] = (byte)(registers[opcode.RegisterY()] - registers[opcode.RegisterX()]);
+                return;
+            }
+
+            // 8xyE - SHL Vx {, Vy}
+            // Set Vx = Vx SHL 1.
+            if ((opcode & 0xF00F) == 0x800E)
+            {
+                flag = (registers[opcode.RegisterX()] & 0x80) > 0;
+                registers[opcode.RegisterX()] = (byte)(registers[opcode.RegisterX()] >> 1);
+                return;
             }
 
             // We've received an unknown opcode
             crashed = true;
         }
 
-        #endregion
-
-        #region OpCode Implementations
-        private void CallMachineRoutine(ushort address)
-        {
-            throw new NotImplementedException("Tried to call machine routine at 0x" + address.ToString("X4") + ".  Machine code routines are not supported.");
-        }
-
-        private void ClearScreen()
-        {
-            GPU.Clear();
-        }
-
-        private void ReturnFromSubroutine()
-        {
-            pc = stack.Pop();
-        }
-
-        private void UnconditionalJump(ushort address)
-        {
-            pc = address;
-        }
-
-        private void UnconditionalJumpWithRegisterZero(ushort address)
-        {
-            pc = (ushort)(address + registers[0]);
-        }
-
-        private void CallSubroutine(ushort address)
-        {
-            stack.Push(pc);
-            pc = address;
-        }
-
-        private void SkipNextIfComparedBytesSame(byte x, byte y)
-        {
-            if (x == y)
-                pc += 2;
-        }
-
-        private void SkipNextIfComparedBytesDifferent(byte x, byte y)
-        {
-            if (x != y)
-                pc += 2;
-        }
-
-        private void LoadRegister(int register, byte data)
-        {
-            registers[register] = data;
-        }
-
-        private void LoadRegisterFromRegister(int destination, int source)
-        {
-            registers[destination] += registers[source];
-        }
-
-        private void AddByteToRegister(int register, byte data)
-        {
-            registers[register] += data;
-        }
-
-        private void AddByteToRegisterWithCarry(int register, byte data)
-        {
-            int result = registers[register] + data;
-            flag = result > 255;
-            registers[register] = (byte)(result & 0xFF);
-        }
-
-        private void SubtractByteFromRegisterWithBorrow(int register, byte data)
-        {
-            flag = registers[register] > data;
-            registers[register] -= data;
-        }
-
-        private void SubtractByteFromRegisterWithBorrowReverse(int register, byte data)
-        {
-            flag = registers[register] < data;
-            registers[register] = (byte)(data - registers[register]);
-        }
-
-        private void ShiftRegisterRight(int register)
-        {
-            flag = (registers[register] & 0x01) == 1;
-            registers[register] = (byte)(registers[register] >> 1);
-        }
-
-        private void ShiftRegisterLeft(int register)
-        {
-            flag = (registers[register] & 0x80) == 1;
-            registers[register] = (byte)(registers[register] << 1);
-        }
-
-        private void LoadIndexer(ushort value)
-        {
-            indexer = value;
-        }
-
-        private void SetRegisterToRandomByteWithMask(int register, byte mask)
-        {
-            registers[register] = (byte)(rand.Next(0, 256) & mask);
-        }
-
-        private void DrawSprite(int x, int y, int count)
-        {
-            byte[] sprites = new byte[count];
-
-            for (int i = 0; i < count; i++)
-                sprites[i] = MMU.ReadByte((ushort)(indexer + i));
-
-            flag = GPU.DrawSprites(x, y, sprites);
-        }
-
-        private void SkipIfKeyHeld(int register)
-        {
-            if (keypad[registers[register]])
-                pc += 2;
-        }
-
-        private void SkipIfKeyNotHeld(int register)
-        {
-            if (!keypad[registers[register]])
-                pc += 2;
-        }
-
-        private void SetDelayTimer(int register)
-        {
-            delay = registers[register];
-        }
-
-        private void SetSoundTimer(int register)
-        {
-            sound = registers[register];
-        }
-
-        private void LoadRegisterFromDelayTimer(int register)
-        {
-            registers[register] = delay;
-        }
-
-        // TODO: Implement this properly
-        private void WaitForKeyPress(int register)
-        {
-            throw new NotImplementedException("Keypad not emulated.");
-            //registers[register] = 0x01;
-        }
-
-        private void AddRegisterToIndexer(int register)
-        {
-            indexer += registers[register];
-        }
-
-        // TODO: Implement this proplery.
-        private void StoreBCDValue(int regsiter)
-        {
-            throw new NotImplementedException("BCD storage not emulated.");
-        }
-
-        private void LoadIndexerWithFontAddress(int register)
-        {
-            throw new NotImplementedException("Font set is not yet emulated.");
-        }
-
-        private void StoreRegistersAtIndexer(int count)
-        {
-            for (int i = 0; i < count; i++)
-                MMU.WriteByte((ushort)(indexer + i), registers[i]);
-        }
-
-        private void LoadRegistersFromMemory(int count)
-        {
-            for (int i = 0; i < count; i++)
-                registers[i] = MMU.ReadByte((ushort)(indexer + i));
-        }
         #endregion
     }
 }
