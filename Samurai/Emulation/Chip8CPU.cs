@@ -162,9 +162,10 @@ namespace Samurai
 
         public void Step()
         {
+            if (crashed)
+                return;
+
             DecodeOpcode(MMU.ReadOpcode(pc));
-            if (!crashed)
-                pc += 2;
         }
 
         #region OpCode Decode
@@ -182,6 +183,7 @@ namespace Samurai
             if (opcode == 0x00E0)
             {
                 GPU.Clear();
+                pc += 2;
                 return;
             }
 
@@ -220,6 +222,7 @@ namespace Samurai
             {
                 if (registers[opcode.RegisterX()] == (opcode & 0x00FF))
                     pc += 2;
+                pc += 2;
                 return;
             }
 
@@ -229,6 +232,7 @@ namespace Samurai
             {
                 if (registers[opcode.RegisterX()] != (opcode & 0x00FF))
                     pc += 2;
+                pc += 2;
                 return;
             }
 
@@ -238,6 +242,7 @@ namespace Samurai
             {
                 if (registers[opcode.RegisterX()] == registers[opcode.RegisterY()])
                     pc += 2;
+                pc += 2;
                 return;
             }
 
@@ -246,6 +251,7 @@ namespace Samurai
             if ((opcode & 0xF000) == 0x6000)
             {
                 registers[opcode.RegisterX()] = (byte)(opcode & 0x00FF);
+                pc += 2;
                 return;
             }
 
@@ -254,6 +260,7 @@ namespace Samurai
             if ((opcode & 0xF000) == 0x7000)
             {
                 registers[opcode.RegisterX()] += (byte)(opcode & 0x00FF);
+                pc += 2;
                 return;
             }
 
@@ -262,6 +269,7 @@ namespace Samurai
             if ((opcode & 0xF00F) == 0x8000)
             {
                 registers[opcode.RegisterX()] = registers[opcode.RegisterY()];
+                pc += 2;
                 return;
             }
 
@@ -270,6 +278,7 @@ namespace Samurai
             if ((opcode & 0xF00F) == 0x8001)
             {
                 registers[opcode.RegisterX()] = (byte)(registers[opcode.RegisterX()] | registers[opcode.RegisterY()]);
+                pc += 2;
                 return;
             }
 
@@ -278,6 +287,7 @@ namespace Samurai
             if ((opcode & 0xF00F) == 0x8002)
             {
                 registers[opcode.RegisterX()] = (byte)(registers[opcode.RegisterX()] & registers[opcode.RegisterY()]);
+                pc += 2;
                 return;
             }
 
@@ -286,6 +296,7 @@ namespace Samurai
             if ((opcode & 0xF00F) == 0x8003)
             {
                 registers[opcode.RegisterX()] = (byte)(registers[opcode.RegisterX()] ^ registers[opcode.RegisterY()]);
+                pc += 2;
                 return;
             }
 
@@ -296,6 +307,7 @@ namespace Samurai
                 int result = registers[opcode.RegisterX()] + registers[opcode.RegisterY()];
                 flag = result > 255;
                 registers[opcode.RegisterX()] = (byte)result;
+                pc += 2;
                 return;
             }
 
@@ -305,6 +317,7 @@ namespace Samurai
             {
                 flag = registers[opcode.RegisterX()] > registers[opcode.RegisterY()];
                 registers[opcode.RegisterX()] = (byte)(registers[opcode.RegisterX()] - registers[opcode.RegisterY()]);
+                pc += 2;
                 return;
             }
 
@@ -314,6 +327,7 @@ namespace Samurai
             {
                 flag = (registers[opcode.RegisterX()] & 0x1) == 1;
                 registers[opcode.RegisterX()] = (byte)(registers[opcode.RegisterX()] >> 1);
+                pc += 2;
                 return;
             }
 
@@ -323,6 +337,7 @@ namespace Samurai
             {
                 flag = registers[opcode.RegisterX()] < registers[opcode.RegisterY()];
                 registers[opcode.RegisterX()] = (byte)(registers[opcode.RegisterY()] - registers[opcode.RegisterX()]);
+                pc += 2;
                 return;
             }
 
@@ -332,6 +347,7 @@ namespace Samurai
             {
                 flag = (registers[opcode.RegisterX()] & 0x80) > 0;
                 registers[opcode.RegisterX()] = (byte)(registers[opcode.RegisterX()] >> 1);
+                pc += 2;
                 return;
             }
 
@@ -341,6 +357,7 @@ namespace Samurai
             {
                 if (registers[opcode.RegisterX()] != registers[opcode.RegisterY()])
                     pc += 2;
+                pc += 2;
                 return;
             }
 
@@ -349,6 +366,7 @@ namespace Samurai
             if ((opcode & 0xF000) == 0xA000)
             {
                 indexer = (ushort)(opcode & 0x0FFF);
+                pc += 2;
                 return;
             }
 
@@ -365,6 +383,7 @@ namespace Samurai
             if ((opcode & 0xF000) == 0xC000)
             {
                 registers[opcode.RegisterX()] = (byte)(rand.Next(0, 256) & (opcode & 0x00FF));
+                pc += 2;
                 return;
             }
 
@@ -377,6 +396,7 @@ namespace Samurai
                 for (int i = 0; i < (opcode & 0xF); i++)
                     sprites[i] = MMU.ReadByte((ushort)(indexer + i));
                 GPU.DrawSprites(registers[opcode.RegisterX()], registers[opcode.RegisterY()], sprites);
+                pc += 2;
                 return;
             }
 
@@ -386,6 +406,7 @@ namespace Samurai
             {
                 if (keypad[registers[opcode.RegisterX()]])
                     pc += 2;
+                pc += 2;
                 return;
             }
 
@@ -395,6 +416,7 @@ namespace Samurai
             {
                 if (!keypad[registers[opcode.RegisterX()]])
                     pc += 2;
+                pc += 2;
                 return;
             }
 
@@ -403,6 +425,7 @@ namespace Samurai
             if ((opcode & 0xF0FF) == 0xF007)
             {
                 registers[opcode.RegisterX()] = delay;
+                pc += 2;
             }
 
             // Fx0A - LD Vx, K
@@ -417,6 +440,7 @@ namespace Samurai
             if ((opcode & 0xF0FF) == 0xF015)
             {
                 delay = registers[opcode.RegisterX()];
+                pc += 2;
                 return;
             }
 
@@ -425,6 +449,7 @@ namespace Samurai
             if ((opcode & 0xF0FF) == 0xF018)
             {
                 sound = registers[opcode.RegisterX()];
+                pc += 2;
                 return;
             }
 
@@ -433,6 +458,7 @@ namespace Samurai
             if ((opcode & 0xF0FF) == 0xF01E)
             {
                 indexer += registers[opcode.RegisterX()];
+                pc += 2;
                 return;
             }
 
@@ -456,6 +482,7 @@ namespace Samurai
             {
                 for (int i = 0; i < (opcode.RegisterX()); i++)
                     MMU.WriteByte(indexer, registers[i]);
+                pc += 2;
             }
 
             // Fx65 - LD Vx, [I]
@@ -464,6 +491,7 @@ namespace Samurai
             {
                 for (int i = 0; i < (opcode.RegisterX()); i++)
                     registers[i] = MMU.ReadByte(indexer);
+                pc += 2;
             }
 
             // We've received an unknown opcode

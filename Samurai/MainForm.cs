@@ -41,7 +41,7 @@ namespace Samurai
             openFileBox.ShowDialog();
             CPU.LoadROM(openFileBox.FileName);
             debugger.UpdateDebugger();
-            gameTimer.Enabled = true;
+            //gameTimer.Enabled = true;
         }
 
         private void gameTimer_Tick(object sender, EventArgs e)
