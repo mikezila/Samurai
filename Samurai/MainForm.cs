@@ -16,12 +16,17 @@ namespace Samurai
 
         Chip8CPU CPU;
         Debugger debugger;
+        Graphics g;
 
         public MainForm()
         {
             InitializeComponent();
             ClientSize = new Size(Chip8GPU.ScreenWidth, Chip8GPU.ScreenHeight).Scale(scaleFactor);
             CPU = new Chip8CPU(new Chip8MMU(), new Chip8GPU());
+            g = CreateGraphics();
+            g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
             debugger = new Debugger(CPU);
         }
 
@@ -40,6 +45,13 @@ namespace Samurai
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
+            if (CPU.Crashed)
+            {
+                gameTimer.Enabled = false;
+                return;
+            }
+            CPU.Step();
+            g.DrawImage(CPU.FrameBuffer, new Point(30, 30));
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)

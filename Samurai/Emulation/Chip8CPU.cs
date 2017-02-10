@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace Samurai
@@ -38,11 +39,11 @@ namespace Samurai
         // Random
         Random rand;
 
-        public bool GameLoaded
+        public Image FrameBuffer
         {
             get
             {
-                return gameLoaded;
+                return GPU.FrameBuffer;
             }
         }
 
@@ -61,6 +62,8 @@ namespace Samurai
                 return state.ToString();
             }
         }
+
+        public bool Crashed { get { return crashed; } }
 
         // Current Register State
         public string[] RegisterState
@@ -158,12 +161,6 @@ namespace Samurai
             Reset();
             MMU.LoadROM(path);
             gameLoaded = true;
-        }
-
-        public void Step(int steps)
-        {
-            for (int i = 0; i < steps; i++)
-                Step();
         }
 
         public void Step()
