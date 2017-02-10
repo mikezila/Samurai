@@ -219,7 +219,8 @@ namespace Samurai
                 return;
             }
 
-            // Skip next if register is the same as given byte
+            // 3xkk - SE Vx, byte
+            // Skip next instruction if Vx = kk.
             if ((opcode & 0xF000) == 0x3000)
             {
                 if (registers[opcode.RegisterX()] == (opcode & 0x00FF))
@@ -227,7 +228,8 @@ namespace Samurai
                 return;
             }
 
-            // Skip next if register is not the same as given byte
+            // 4xkk - SNE Vx, byte
+            // Skip next instruction if Vx != kk.
             if ((opcode & 0xF000) == 0x4000)
             {
                 if (registers[opcode.RegisterX()] != (opcode & 0x00FF))
@@ -235,7 +237,8 @@ namespace Samurai
                 return;
             }
 
-            // Skip next if registers are equal
+            // 5xy0 - SE Vx, Vy
+            // Skip next instruction if Vx = Vy.
             if ((opcode & 0xF000) == 0x5000)
             {
                 if (registers[opcode.RegisterX()] == registers[opcode.RegisterY()])
@@ -243,11 +246,11 @@ namespace Samurai
                 return;
             }
 
-            // Skip next if registers are not equal
+            // 6xkk - LD Vx, byte
+            // Set Vx = kk.
             if ((opcode & 0xF000) == 0x6000)
             {
-                if (registers[opcode.RegisterX()] != registers[opcode.RegisterY()])
-                    pc += 2;
+                registers[opcode.RegisterX()] = (byte)(opcode & 0x00FF);
                 return;
             }
 
