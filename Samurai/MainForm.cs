@@ -41,7 +41,7 @@ namespace Samurai
             openFileBox.ShowDialog();
             CPU.LoadROM(openFileBox.FileName);
             debugger.UpdateDebugger();
-            //gameTimer.Enabled = true;
+            gameTimer.Enabled = !manualStepToolStripMenuItem.Checked;
         }
 
         private void gameTimer_Tick(object sender, EventArgs e)
@@ -75,6 +75,11 @@ namespace Samurai
             else
                 debugger.Hide();
             Focus();
+        }
+
+        private void manualStepToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            manualStepToolStripMenuItem.Checked = !manualStepToolStripMenuItem.Checked;
         }
     }
 }

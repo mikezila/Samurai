@@ -306,7 +306,7 @@ namespace Samurai
             {
                 int result = registers[opcode.RegisterX()] + registers[opcode.RegisterY()];
                 flag = result > 255;
-                registers[opcode.RegisterX()] = (byte)result;
+                registers[opcode.RegisterX()] = (byte)(result & 0xFF);
                 pc += 2;
                 return;
             }
