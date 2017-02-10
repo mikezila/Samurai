@@ -118,7 +118,7 @@
             this.direct3DToolStripMenuItem,
             this.dfxGlideToolStripMenuItem});
             this.rendererToolStripMenuItem.Name = "rendererToolStripMenuItem";
-            this.rendererToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rendererToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.rendererToolStripMenuItem.Text = "Renderer";
             // 
             // gDIToolStripMenuItem
@@ -126,28 +126,28 @@
             this.gDIToolStripMenuItem.Checked = true;
             this.gDIToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.gDIToolStripMenuItem.Name = "gDIToolStripMenuItem";
-            this.gDIToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gDIToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.gDIToolStripMenuItem.Text = "GDI+";
             // 
             // openGLToolStripMenuItem
             // 
             this.openGLToolStripMenuItem.Enabled = false;
             this.openGLToolStripMenuItem.Name = "openGLToolStripMenuItem";
-            this.openGLToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openGLToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.openGLToolStripMenuItem.Text = "OpenGL";
             // 
             // direct3DToolStripMenuItem
             // 
             this.direct3DToolStripMenuItem.Enabled = false;
             this.direct3DToolStripMenuItem.Name = "direct3DToolStripMenuItem";
-            this.direct3DToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.direct3DToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.direct3DToolStripMenuItem.Text = "Direct3D";
             // 
             // dfxGlideToolStripMenuItem
             // 
             this.dfxGlideToolStripMenuItem.Enabled = false;
             this.dfxGlideToolStripMenuItem.Name = "dfxGlideToolStripMenuItem";
-            this.dfxGlideToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.dfxGlideToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.dfxGlideToolStripMenuItem.Text = "3dfx Glide";
             // 
             // displaySizeToolStripMenuItem
@@ -156,7 +156,7 @@
             this.normalToolStripMenuItem,
             this.largeToolStripMenuItem});
             this.displaySizeToolStripMenuItem.Name = "displaySizeToolStripMenuItem";
-            this.displaySizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.displaySizeToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.displaySizeToolStripMenuItem.Text = "Display Size";
             // 
             // normalToolStripMenuItem
@@ -164,26 +164,26 @@
             this.normalToolStripMenuItem.Checked = true;
             this.normalToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.normalToolStripMenuItem.Name = "normalToolStripMenuItem";
-            this.normalToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.normalToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.normalToolStripMenuItem.Text = "Normal";
             // 
             // largeToolStripMenuItem
             // 
             this.largeToolStripMenuItem.Enabled = false;
             this.largeToolStripMenuItem.Name = "largeToolStripMenuItem";
-            this.largeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.largeToolStripMenuItem.Size = new System.Drawing.Size(114, 22);
             this.largeToolStripMenuItem.Text = "Large";
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(132, 6);
             // 
             // soundToolStripMenuItem
             // 
             this.soundToolStripMenuItem.Enabled = false;
             this.soundToolStripMenuItem.Name = "soundToolStripMenuItem";
-            this.soundToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.soundToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.soundToolStripMenuItem.Text = "Sound";
             // 
             // debugToolStripMenuItem
@@ -197,7 +197,7 @@
             // debuggerToolStripMenuItem
             // 
             this.debuggerToolStripMenuItem.Name = "debuggerToolStripMenuItem";
-            this.debuggerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.debuggerToolStripMenuItem.Size = new System.Drawing.Size(126, 22);
             this.debuggerToolStripMenuItem.Text = "Debugger";
             this.debuggerToolStripMenuItem.Click += new System.EventHandler(this.debuggerToolStripMenuItem_Click);
             // 
@@ -214,18 +214,18 @@
             // controlsToolStripMenuItem
             // 
             this.controlsToolStripMenuItem.Name = "controlsToolStripMenuItem";
-            this.controlsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.controlsToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.controlsToolStripMenuItem.Text = "Controls";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(116, 6);
             // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(119, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
@@ -236,7 +236,7 @@
             // gameTimer
             // 
             this.gameTimer.Enabled = true;
-            this.gameTimer.Interval = 16;
+            this.gameTimer.Interval = 50;
             this.gameTimer.Tick += new System.EventHandler(this.gameTimer_Tick);
             // 
             // MainForm

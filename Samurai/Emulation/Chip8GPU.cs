@@ -37,15 +37,38 @@ namespace Samurai
         public bool DrawSprites(int x, int y, byte[] sprites)
         {
             bool collision = false;
+            bool stickyCollision = false;
 
             for (int sprite = 0; sprite < sprites.Length; sprite++)
                 for (int bit = 0; bit < 8; bit++)
                 {
-                    pixels[(x + bit) % ScreenWidth, (y + sprite) % ScreenHeight] = ((sprites[sprite] >> (7 - bit)) & 0x1) == 1;
+                    collision = SetPixelXOR((x + bit) % ScreenWidth, (y + sprite) % ScreenHeight, (sprites[sprite] >> (7 - bit)) & 0x1);
+                    if (collision)
+                        stickyCollision = true;
                 }
 
             UpdateFrameBuffer();
-            return collision;
+            return stickyCollision;
+        }
+
+        private bool SetPixelXOR(int x, int y, int value)
+        {
+            if (value == 0)
+                return false;
+
+            bool flag = false;
+            if (pixels[x, y] && (value == 1))
+            {
+                pixels[x, y] = false;
+                flag = true;
+            }
+            else if (pixels[x, y] == false && (value == 1))
+            {
+                pixels[x, y] = true;
+                flag = false;
+            }
+
+            return flag;
         }
 
         private void UpdateFrameBuffer()
