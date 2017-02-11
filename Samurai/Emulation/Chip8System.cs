@@ -14,6 +14,7 @@ namespace Samurai
         public System.Drawing.Bitmap FrameBuffer { get { return GPU.FrameBuffer; } }
         public bool Crashed { get { return CPU.Crashed; } }
 
+        #region Debugging States
         public string CPUState
         {
             get
@@ -26,6 +27,8 @@ namespace Samurai
                 return state.ToString();
             }
         }
+
+        public int PC { get { return CPU.PC; } }
 
         public string[] RegisterState
         {
@@ -48,6 +51,10 @@ namespace Samurai
                 return stateStrings;
             }
         }
+
+        public string[] MMUState { get { return MMU.State; } }
+        public string[] MMUStateOpcodes { get { return MMU.StateAsOpcodes; } }
+        #endregion
 
         public Chip8System()
         {

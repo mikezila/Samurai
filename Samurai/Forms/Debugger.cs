@@ -52,10 +52,10 @@ namespace Samurai
 
         private void dumpMemoryButton_Click(object sender, EventArgs e)
         {
-            //memoryDumpListbox.DataSource = CPU.MMUState;
-            //memoryDumpListbox.SelectedIndex = CPU.PC;
-            //opcodeListBox.DataSource = CPU.MMUStateOpcodes;
-            //opcodeListBox.SelectedIndex = CPU.PC / 2;
+            memoryDumpListbox.DataSource = Chip8VM.MMUState;
+            opcodeListBox.DataSource = Chip8VM.MMUStateOpcodes;
+            memoryDumpListbox.SelectedIndex = Chip8VM.PC;
+            opcodeListBox.SelectedIndex = Chip8VM.PC / 2;
         }
     }
 }

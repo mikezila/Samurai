@@ -75,6 +75,10 @@ namespace Samurai
                 return;
 
             DecodeOpcode(MMU.ReadOpcode(PC));
+            if (Sound > 0)
+                Sound--;
+            if (Delay > 0)
+                Delay--;
         }
 
         #region OpCode Decode
@@ -336,6 +340,7 @@ namespace Samurai
             {
                 Registers[opcode.RegisterX()] = Delay;
                 PC += 2;
+                return;
             }
 
             // Fx0A - LD Vx, K
@@ -393,6 +398,7 @@ namespace Samurai
                 for (int i = 0; i < (opcode.RegisterX()); i++)
                     MMU.WriteByte(Indexer, Registers[i]);
                 PC += 2;
+                return;
             }
 
             // Fx65 - LD Vx, [I]
@@ -402,6 +408,7 @@ namespace Samurai
                 for (int i = 0; i < (opcode.RegisterX()); i++)
                     Registers[i] = MMU.ReadByte(Indexer);
                 PC += 2;
+                return;
             }
 
             // We've received an unknown opcode
