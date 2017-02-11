@@ -395,7 +395,7 @@ namespace Samurai
             // Store registers V0 through Vx in memory starting at location I.
             if ((opcode & 0xF0FF) == 0xF055)
             {
-                for (int i = 0; i < (opcode.RegisterX()); i++)
+                for (int i = 0; i <= (opcode.RegisterX()); i++)
                     MMU.WriteByte(Indexer, Registers[i]);
                 PC += 2;
                 return;
@@ -405,7 +405,7 @@ namespace Samurai
             // Read registers V0 through Vx from memory starting at location I.
             if ((opcode & 0xF0FF) == 0xF065)
             {
-                for (int i = 0; i < (opcode.RegisterX()); i++)
+                for (int i = 0; i <= (opcode.RegisterX()); i++)
                     Registers[i] = MMU.ReadByte(Indexer);
                 PC += 2;
                 return;
