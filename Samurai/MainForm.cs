@@ -44,14 +44,13 @@ namespace Samurai
             Chip8VM.Run();
         }
 
-        long lastTime = 0;
         private void gameTimer_Tick(object sender, EventArgs e)
         {
             if (!Chip8VM.Running)
                 return;
             if (!Chip8VM.Debugging)
-                while (!Chip8VM.FrameBufferDirty)
-                    Chip8VM.Step();
+                //while (!Chip8VM.FrameBufferDirty)
+                Chip8VM.Step();
 
             if (Chip8VM.FrameBufferDirty)
             {

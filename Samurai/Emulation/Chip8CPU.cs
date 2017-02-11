@@ -264,7 +264,7 @@ namespace Samurai
             if ((opcode & 0xF00F) == 0x800E)
             {
                 Flag = (Registers[opcode.RegisterX()] & 0x80) > 0;
-                Registers[opcode.RegisterX()] = (byte)(Registers[opcode.RegisterX()] >> 1);
+                Registers[opcode.RegisterX()] = (byte)(Registers[opcode.RegisterX()] << 1);
                 PC += 2;
                 return;
             }
@@ -400,7 +400,7 @@ namespace Samurai
             if ((opcode & 0xF0FF) == 0xF055)
             {
                 for (int i = 0; i <= (opcode.RegisterX()); i++)
-                    MMU.WriteByte(Indexer, Registers[i]);
+                    MMU.WriteByte((ushort)(Indexer + i), Registers[i]);
                 PC += 2;
                 return;
             }
@@ -410,7 +410,7 @@ namespace Samurai
             if ((opcode & 0xF0FF) == 0xF065)
             {
                 for (int i = 0; i <= (opcode.RegisterX()); i++)
-                    Registers[i] = MMU.ReadByte(Indexer);
+                    Registers[i] = MMU.ReadByte((ushort)(Indexer + i));
                 PC += 2;
                 return;
             }
