@@ -28,13 +28,15 @@ namespace Samurai
 
         public void UpdateDebugger()
         {
-            memoryDumpListbox.DataSource = CPU.MMUState;
-            memoryDumpListbox.SelectedIndex = CPU.PC;
-            stackListBox.DataSource = CPU.StackState;
-            cpuStateLabel.Text = CPU.CPUState;
-            registersListBox.DataSource = CPU.RegisterState;
-            opcodeListBox.DataSource = CPU.MMUStateOpcodes;
-            opcodeListBox.SelectedIndex = CPU.PC / 2;
+            //stackListBox.DataSource = CPU.StackState;
+            //cpuStateLabel.Text = CPU.CPUState;
+            //registersListBox.DataSource = CPU.RegisterState;
+        }
+
+        public void StepButtonControl(bool state)
+        {
+            stepButton.Enabled = state;
+            dumpMemoryButton.Enabled = state;
         }
 
         private void stepButton_Click(object sender, EventArgs e)
@@ -46,6 +48,14 @@ namespace Samurai
         private void updateButton_Click(object sender, EventArgs e)
         {
             UpdateDebugger();
+        }
+
+        private void dumpMemoryButton_Click(object sender, EventArgs e)
+        {
+            //memoryDumpListbox.DataSource = CPU.MMUState;
+            //memoryDumpListbox.SelectedIndex = CPU.PC;
+            //opcodeListBox.DataSource = CPU.MMUStateOpcodes;
+            //opcodeListBox.SelectedIndex = CPU.PC / 2;
         }
     }
 }

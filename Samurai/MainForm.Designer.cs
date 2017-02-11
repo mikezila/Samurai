@@ -119,7 +119,7 @@
             this.direct3DToolStripMenuItem,
             this.dfxGlideToolStripMenuItem});
             this.rendererToolStripMenuItem.Name = "rendererToolStripMenuItem";
-            this.rendererToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.rendererToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.rendererToolStripMenuItem.Text = "Renderer";
             // 
             // gDIToolStripMenuItem
@@ -157,7 +157,7 @@
             this.normalToolStripMenuItem,
             this.largeToolStripMenuItem});
             this.displaySizeToolStripMenuItem.Name = "displaySizeToolStripMenuItem";
-            this.displaySizeToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.displaySizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.displaySizeToolStripMenuItem.Text = "Display Size";
             // 
             // normalToolStripMenuItem
@@ -178,13 +178,13 @@
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(132, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
             // 
             // soundToolStripMenuItem
             // 
             this.soundToolStripMenuItem.Enabled = false;
             this.soundToolStripMenuItem.Name = "soundToolStripMenuItem";
-            this.soundToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.soundToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.soundToolStripMenuItem.Text = "Sound";
             // 
             // debugToolStripMenuItem

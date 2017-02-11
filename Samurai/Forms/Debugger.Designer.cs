@@ -37,11 +37,11 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.registersListBox = new System.Windows.Forms.ListBox();
-            this.updateButton = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.opcodeListBox = new System.Windows.Forms.ListBox();
+            this.dumpMemoryButton = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -50,11 +50,13 @@
             // 
             // stepButton
             // 
-            this.stepButton.Location = new System.Drawing.Point(12, 78);
+            this.stepButton.Enabled = false;
+            this.stepButton.Font = new System.Drawing.Font("Courier New", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.stepButton.Location = new System.Drawing.Point(12, 41);
             this.stepButton.Name = "stepButton";
-            this.stepButton.Size = new System.Drawing.Size(156, 39);
+            this.stepButton.Size = new System.Drawing.Size(156, 43);
             this.stepButton.TabIndex = 1;
-            this.stepButton.Text = "Step + Update";
+            this.stepButton.Text = "Step";
             this.stepButton.UseVisualStyleBackColor = true;
             this.stepButton.Click += new System.EventHandler(this.stepButton_Click);
             // 
@@ -72,7 +74,7 @@
             // 
             this.closeDebuggerButton.Location = new System.Drawing.Point(12, 12);
             this.closeDebuggerButton.Name = "closeDebuggerButton";
-            this.closeDebuggerButton.Size = new System.Drawing.Size(103, 23);
+            this.closeDebuggerButton.Size = new System.Drawing.Size(156, 23);
             this.closeDebuggerButton.TabIndex = 4;
             this.closeDebuggerButton.Text = "Close Debugger";
             this.closeDebuggerButton.UseVisualStyleBackColor = true;
@@ -135,16 +137,6 @@
             this.registersListBox.Size = new System.Drawing.Size(88, 84);
             this.registersListBox.TabIndex = 8;
             // 
-            // updateButton
-            // 
-            this.updateButton.Location = new System.Drawing.Point(12, 49);
-            this.updateButton.Name = "updateButton";
-            this.updateButton.Size = new System.Drawing.Size(156, 23);
-            this.updateButton.TabIndex = 10;
-            this.updateButton.Text = "Update";
-            this.updateButton.UseVisualStyleBackColor = true;
-            this.updateButton.Click += new System.EventHandler(this.updateButton_Click);
-            // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
@@ -187,14 +179,25 @@
             this.opcodeListBox.Size = new System.Drawing.Size(506, 308);
             this.opcodeListBox.TabIndex = 0;
             // 
+            // dumpMemoryButton
+            // 
+            this.dumpMemoryButton.Enabled = false;
+            this.dumpMemoryButton.Location = new System.Drawing.Point(12, 90);
+            this.dumpMemoryButton.Name = "dumpMemoryButton";
+            this.dumpMemoryButton.Size = new System.Drawing.Size(156, 27);
+            this.dumpMemoryButton.TabIndex = 1;
+            this.dumpMemoryButton.Text = "Dump Memory";
+            this.dumpMemoryButton.UseVisualStyleBackColor = true;
+            this.dumpMemoryButton.Click += new System.EventHandler(this.dumpMemoryButton_Click);
+            // 
             // Debugger
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(557, 475);
+            this.ClientSize = new System.Drawing.Size(545, 463);
             this.ControlBox = false;
+            this.Controls.Add(this.dumpMemoryButton);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.updateButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.registersListBox);
             this.Controls.Add(this.label1);
@@ -229,10 +232,10 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListBox registersListBox;
-        private System.Windows.Forms.Button updateButton;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.ListBox opcodeListBox;
+        private System.Windows.Forms.Button dumpMemoryButton;
     }
 }

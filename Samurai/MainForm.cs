@@ -17,11 +17,11 @@ namespace Samurai
             InitializeComponent();
             ClientSize = new Size(Chip8GPU.ScreenWidth * scaleFactor, (Chip8GPU.ScreenHeight * scaleFactor) + 24);
             Chip8VM = new Chip8System();
+            debugger = new Debugger(Chip8VM);
             g = CreateGraphics();
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
-            debugger = new Debugger(Chip8VM);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -32,25 +32,22 @@ namespace Samurai
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
             openFileBox.Multiselect = false;
-            openFileBox.ShowDialog();
-            CPU.LoadROM(openFileBox.FileName);
-            debugger.UpdateDebugger();
-            gameTimer.Enabled = !manualStepToolStripMenuItem.Checked;
+            var result = openFileBox.ShowDialog();
+            if (result == DialogResult.Cancel)
+                return;
+            Chip8VM.Reset();
+            Chip8VM.LoadROM(openFileBox.FileName);
+            Chip8VM.Run();
         }
 
         private void gameTimer_Tick(object sender, EventArgs e)
         {
-            if (CPU.Crashed)
-            {
-                gameTimer.Enabled = false;
+            if (!Chip8VM.Running)
                 return;
-            }
-            g.DrawImage(CPU.FrameBuffer, 0, 24, Chip8GPU.ScreenWidth * scaleFactor, Chip8GPU.ScreenHeight * scaleFactor);
-        }
+            if (!Chip8VM.Debugging)
+                Chip8VM.Step();
 
-        public void SystemStep()
-        {
-            CPU.Step();
+            g.DrawImage(Chip8VM.FrameBuffer, 0, 24, Chip8GPU.ScreenWidth * scaleFactor, Chip8GPU.ScreenHeight * scaleFactor);
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)
@@ -73,6 +70,8 @@ namespace Samurai
         private void manualStepToolStripMenuItem_Click(object sender, EventArgs e)
         {
             manualStepToolStripMenuItem.Checked = !manualStepToolStripMenuItem.Checked;
+            Chip8VM.Debugging = manualStepToolStripMenuItem.Checked;
+            debugger.StepButtonControl(manualStepToolStripMenuItem.Checked);
         }
     }
 }

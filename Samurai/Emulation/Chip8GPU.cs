@@ -25,13 +25,14 @@ namespace Samurai
 
         public Chip8GPU()
         {
+            FrameBuffer = new Bitmap(ScreenWidth, ScreenHeight);
             Reset();
         }
 
         public void Reset()
         {
-            FrameBuffer = new Bitmap(ScreenWidth, ScreenHeight);
             pixels = new bool[ScreenWidth, ScreenHeight];
+            UpdateFrameBuffer();
         }
 
         // Dare you enter my magical realm?
@@ -54,7 +55,7 @@ namespace Samurai
         }
 
         // This is a mess but it seems to work right.  Don't fucking breathe on it.
-        bool SetPixelXOR(int x, int y, int value)
+        private bool SetPixelXOR(int x, int y, int value)
         {
             if (value == 0)
                 return false;
@@ -74,7 +75,7 @@ namespace Samurai
             return flag;
         }
 
-        void UpdateFrameBuffer()
+        private void UpdateFrameBuffer()
         {
             for (int x = 0; x < ScreenWidth; x++)
                 for (int y = 0; y < ScreenHeight; y++)
