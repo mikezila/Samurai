@@ -44,14 +44,18 @@ namespace Samurai
             Chip8VM.Run();
         }
 
+        int maxFrames = 16;
+        int frame = 0;
         private void gameTimer_Tick(object sender, EventArgs e)
         {
             if (!Chip8VM.Running)
                 return;
             if (!Chip8VM.Debugging)
-                while (!Chip8VM.FrameBufferDirty)
+                while (!Chip8VM.FrameBufferDirty && frame++ < maxFrames)
+                {
                     Chip8VM.Step();
-
+                }
+            frame = 0;
             if (Chip8VM.FrameBufferDirty)
             {
                 g.DrawImage(Chip8VM.FrameBuffer, 0, 24, Chip8GPU.ScreenWidth * scaleFactor, Chip8GPU.ScreenHeight * scaleFactor);

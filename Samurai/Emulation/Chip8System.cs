@@ -86,6 +86,7 @@ namespace Samurai
 
         public void Reset()
         {
+            Running = false;
             GPU.Reset();
             MMU.Reset();
             CPU.Reset();
