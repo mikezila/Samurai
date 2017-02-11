@@ -74,11 +74,15 @@ namespace Samurai
             if (Crashed)
                 return;
 
-            DecodeOpcode(MMU.ReadOpcode(PC));
             if (Sound > 0)
                 Sound--;
             if (Delay > 0)
+            {
                 Delay--;
+                GPU.Dirty = true;
+                return;
+            }
+            DecodeOpcode(MMU.ReadOpcode(PC));
         }
 
         #region OpCode Decode

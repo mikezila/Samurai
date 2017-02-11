@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -12,9 +13,12 @@ namespace Samurai
         Debugger debugger;
         Graphics g;
 
+        Stopwatch watch;
+
         public MainForm()
         {
             InitializeComponent();
+            watch = new Stopwatch();
             ClientSize = new Size(Chip8GPU.ScreenWidth * scaleFactor, (Chip8GPU.ScreenHeight * scaleFactor) + 24);
             Chip8VM = new Chip8System();
             debugger = new Debugger(Chip8VM);
@@ -40,14 +44,20 @@ namespace Samurai
             Chip8VM.Run();
         }
 
+        long lastTime = 0;
         private void gameTimer_Tick(object sender, EventArgs e)
         {
             if (!Chip8VM.Running)
                 return;
             if (!Chip8VM.Debugging)
-                Chip8VM.Step();
+                while (!Chip8VM.FrameBufferDirty)
+                    Chip8VM.Step();
 
-            g.DrawImage(Chip8VM.FrameBuffer, 0, 24, Chip8GPU.ScreenWidth * scaleFactor, Chip8GPU.ScreenHeight * scaleFactor);
+            if (Chip8VM.FrameBufferDirty)
+            {
+                g.DrawImage(Chip8VM.FrameBuffer, 0, 24, Chip8GPU.ScreenWidth * scaleFactor, Chip8GPU.ScreenHeight * scaleFactor);
+                Chip8VM.FrameBufferDirty = false;
+            }
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)

@@ -23,6 +23,9 @@ namespace Samurai
         readonly Color offColor = Color.Black;
         readonly Color onColor = Color.White;
 
+        // Flag for if the screen has changed since last draw
+        public bool Dirty { get; set; }
+
         public Chip8GPU()
         {
             FrameBuffer = new Bitmap(ScreenWidth, ScreenHeight);
@@ -38,6 +41,7 @@ namespace Samurai
         // Dare you enter my magical realm?
         public bool DrawSprites(int x, int y, byte[] sprites)
         {
+            Dirty = true;
             bool collision = false;
             bool stickyCollision = false;
 
@@ -84,6 +88,7 @@ namespace Samurai
 
         public void Clear()
         {
+            Dirty = true;
             pixels = new bool[ScreenWidth, ScreenHeight];
         }
     }

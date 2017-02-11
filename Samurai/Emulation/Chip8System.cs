@@ -12,7 +12,11 @@ namespace Samurai
         public bool Debugging { get; set; }
 
         public System.Drawing.Bitmap FrameBuffer { get { return GPU.FrameBuffer; } }
-        public bool Crashed { get { return CPU.Crashed; } }
+        public bool FrameBufferDirty
+        {
+            get { return GPU.Dirty; }
+            set { GPU.Dirty = value; }
+        }
 
         #region Debugging States
         public string CPUState
@@ -29,6 +33,8 @@ namespace Samurai
         }
 
         public int PC { get { return CPU.PC; } }
+
+        public bool Crashed { get { return CPU.Crashed; } }
 
         public string[] RegisterState
         {

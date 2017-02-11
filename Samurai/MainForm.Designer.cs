@@ -48,13 +48,13 @@
             this.soundToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debugToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.debuggerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.manualStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.controlsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openFileBox = new System.Windows.Forms.OpenFileDialog();
             this.gameTimer = new System.Windows.Forms.Timer(this.components);
-            this.manualStepToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -119,7 +119,7 @@
             this.direct3DToolStripMenuItem,
             this.dfxGlideToolStripMenuItem});
             this.rendererToolStripMenuItem.Name = "rendererToolStripMenuItem";
-            this.rendererToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.rendererToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.rendererToolStripMenuItem.Text = "Renderer";
             // 
             // gDIToolStripMenuItem
@@ -157,7 +157,7 @@
             this.normalToolStripMenuItem,
             this.largeToolStripMenuItem});
             this.displaySizeToolStripMenuItem.Name = "displaySizeToolStripMenuItem";
-            this.displaySizeToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.displaySizeToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.displaySizeToolStripMenuItem.Text = "Display Size";
             // 
             // normalToolStripMenuItem
@@ -178,13 +178,13 @@
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(132, 6);
             // 
             // soundToolStripMenuItem
             // 
             this.soundToolStripMenuItem.Enabled = false;
             this.soundToolStripMenuItem.Name = "soundToolStripMenuItem";
-            this.soundToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.soundToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.soundToolStripMenuItem.Text = "Sound";
             // 
             // debugToolStripMenuItem
@@ -199,9 +199,16 @@
             // debuggerToolStripMenuItem
             // 
             this.debuggerToolStripMenuItem.Name = "debuggerToolStripMenuItem";
-            this.debuggerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.debuggerToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.debuggerToolStripMenuItem.Text = "Debugger";
             this.debuggerToolStripMenuItem.Click += new System.EventHandler(this.debuggerToolStripMenuItem_Click);
+            // 
+            // manualStepToolStripMenuItem
+            // 
+            this.manualStepToolStripMenuItem.Name = "manualStepToolStripMenuItem";
+            this.manualStepToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.manualStepToolStripMenuItem.Text = "Manual Step";
+            this.manualStepToolStripMenuItem.Click += new System.EventHandler(this.manualStepToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -238,15 +245,8 @@
             // gameTimer
             // 
             this.gameTimer.Enabled = true;
-            this.gameTimer.Interval = 16;
+            this.gameTimer.Interval = 1;
             this.gameTimer.Tick += new System.EventHandler(this.gameTimer_Tick);
-            // 
-            // manualStepToolStripMenuItem
-            // 
-            this.manualStepToolStripMenuItem.Name = "manualStepToolStripMenuItem";
-            this.manualStepToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.manualStepToolStripMenuItem.Text = "Manual Step";
-            this.manualStepToolStripMenuItem.Click += new System.EventHandler(this.manualStepToolStripMenuItem_Click);
             // 
             // MainForm
             // 
