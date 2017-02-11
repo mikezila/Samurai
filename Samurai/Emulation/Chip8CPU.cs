@@ -263,8 +263,9 @@ namespace Samurai
             // Set Vx = Vx SHL 1.
             if ((opcode & 0xF00F) == 0x800E)
             {
-                Flag = (Registers[opcode.RegisterX()] & 0x80) > 0;
-                Registers[opcode.RegisterX()] = (byte)(Registers[opcode.RegisterX()] << 1);
+                int result = Registers[opcode.RegisterX()] << 1;
+                Flag = result > 255;
+                Registers[opcode.RegisterX()] = (byte)(result);
                 PC += 2;
                 return;
             }
