@@ -49,8 +49,8 @@ namespace Samurai
             if (!Chip8VM.Running)
                 return;
             if (!Chip8VM.Debugging)
-                //while (!Chip8VM.FrameBufferDirty)
-                Chip8VM.Step();
+                while (!Chip8VM.FrameBufferDirty)
+                    Chip8VM.Step();
 
             if (Chip8VM.FrameBufferDirty)
             {

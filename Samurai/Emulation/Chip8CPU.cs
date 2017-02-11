@@ -253,7 +253,7 @@ namespace Samurai
             // Set Vx = Vy - Vx, set VF = NOT borrow.
             if ((opcode & 0xF00F) == 0x8007)
             {
-                Flag = Registers[opcode.RegisterX()] <= Registers[opcode.RegisterY()];
+                Flag = Registers[opcode.RegisterY()] >= Registers[opcode.RegisterX()];
                 Registers[opcode.RegisterX()] = (byte)(Registers[opcode.RegisterY()] - Registers[opcode.RegisterX()]);
                 PC += 2;
                 return;
