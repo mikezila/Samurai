@@ -28,9 +28,9 @@ namespace Samurai
 
         public void UpdateDebugger()
         {
-            //stackListBox.DataSource = CPU.StackState;
-            //cpuStateLabel.Text = CPU.CPUState;
-            //registersListBox.DataSource = CPU.RegisterState;
+            stackListBox.DataSource = Chip8VM.StackState;
+            cpuStateLabel.Text = Chip8VM.CPUState;
+            registersListBox.DataSource = Chip8VM.RegisterState;
         }
 
         public void StepButtonControl(bool state)

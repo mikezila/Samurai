@@ -120,6 +120,7 @@ namespace Samurai
             // 2nnn - CALL addr
             if ((opcode & 0xF000) == 0x2000)
             {
+                PC += 2;
                 Stack.Push(PC);
                 PC = (ushort)(opcode & 0x0FFF);
                 return;

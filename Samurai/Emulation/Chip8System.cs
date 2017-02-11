@@ -1,4 +1,6 @@
-﻿namespace Samurai
+﻿using System.Text;
+
+namespace Samurai
 {
     class Chip8System
     {
@@ -11,6 +13,41 @@
 
         public System.Drawing.Bitmap FrameBuffer { get { return GPU.FrameBuffer; } }
         public bool Crashed { get { return CPU.Crashed; } }
+
+        public string CPUState
+        {
+            get
+            {
+                StringBuilder state = new StringBuilder();
+                state.AppendLine("PC: 0x" + CPU.PC.ToString("X4") + " I: 0x" + CPU.Indexer.ToString("X4"));
+                state.AppendLine(" F: " + (CPU.Flag ? "1" : "0"));
+                if (CPU.Crashed)
+                    state.AppendLine("!!! Crashed !!!");
+                return state.ToString();
+            }
+        }
+
+        public string[] RegisterState
+        {
+            get
+            {
+                string[] stateStrings = new string[CPU.Registers.Length];
+                for (int i = 0; i < CPU.Registers.Length; i++)
+                    stateStrings[i] = "V" + i.ToString("X1") + " " + CPU.Registers[i].ToString("X4");
+                return stateStrings;
+            }
+        }
+
+        public string[] StackState
+        {
+            get
+            {
+                string[] stateStrings = new string[CPU.Stack.Count];
+                for (int i = 0; i < CPU.Stack.Count; i++)
+                    stateStrings[i] = CPU.Stack.ToArray()[i].ToString("X4");
+                return stateStrings;
+            }
+        }
 
         public Chip8System()
         {
