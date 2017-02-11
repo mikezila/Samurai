@@ -49,6 +49,7 @@
     <Compile Include="Emulation\Chip8CPU.cs" />
     <Compile Include="Emulation\Chip8GPU.cs" />
     <Compile Include="Emulation\Chip8MMU.cs" />
+    <Compile Include="Emulation\Chip8System.cs" />
     <Compile Include="Forms\About.cs">
       <SubType>Form</SubType>
     </Compile>

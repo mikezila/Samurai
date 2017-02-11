@@ -34,6 +34,7 @@ namespace Samurai
             pixels = new bool[ScreenWidth, ScreenHeight];
         }
 
+        // Dare you enter my magical realm?
         public bool DrawSprites(int x, int y, byte[] sprites)
         {
             bool collision = false;
@@ -42,6 +43,7 @@ namespace Samurai
             for (int sprite = 0; sprite < sprites.Length; sprite++)
                 for (int bit = 0; bit < 8; bit++)
                 {
+                    // Holy shit.  It works, though.
                     collision = SetPixelXOR((x + bit) % ScreenWidth, (y + sprite) % ScreenHeight, (sprites[sprite] >> (7 - bit)) & 0x1);
                     if (collision)
                         stickyCollision = true;
@@ -51,7 +53,8 @@ namespace Samurai
             return stickyCollision;
         }
 
-        private bool SetPixelXOR(int x, int y, int value)
+        // This is a mess but it seems to work right.  Don't fucking breathe on it.
+        bool SetPixelXOR(int x, int y, int value)
         {
             if (value == 0)
                 return false;
@@ -71,14 +74,14 @@ namespace Samurai
             return flag;
         }
 
-        private void UpdateFrameBuffer()
+        void UpdateFrameBuffer()
         {
             for (int x = 0; x < ScreenWidth; x++)
                 for (int y = 0; y < ScreenHeight; y++)
                     FrameBuffer.SetPixel(x, y, pixels[x, y] ? onColor : offColor);
         }
 
-        internal void Clear()
+        public void Clear()
         {
             pixels = new bool[ScreenWidth, ScreenHeight];
         }

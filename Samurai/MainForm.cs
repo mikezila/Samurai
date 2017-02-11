@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Samurai
@@ -14,7 +8,7 @@ namespace Samurai
     {
         const int scaleFactor = 8;
 
-        Chip8CPU CPU;
+        Chip8System Chip8VM;
         Debugger debugger;
         Graphics g;
 
@@ -22,12 +16,12 @@ namespace Samurai
         {
             InitializeComponent();
             ClientSize = new Size(Chip8GPU.ScreenWidth * scaleFactor, (Chip8GPU.ScreenHeight * scaleFactor) + 24);
-            CPU = new Chip8CPU(new Chip8MMU(), new Chip8GPU());
+            Chip8VM = new Chip8System();
             g = CreateGraphics();
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.Half;
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
-            debugger = new Debugger(CPU);
+            debugger = new Debugger(Chip8VM);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -51,13 +45,12 @@ namespace Samurai
                 gameTimer.Enabled = false;
                 return;
             }
-            SystemStep();
+            g.DrawImage(CPU.FrameBuffer, 0, 24, Chip8GPU.ScreenWidth * scaleFactor, Chip8GPU.ScreenHeight * scaleFactor);
         }
 
         public void SystemStep()
         {
             CPU.Step();
-            g.DrawImage(CPU.FrameBuffer, 0, 24, Chip8GPU.ScreenWidth * scaleFactor, Chip8GPU.ScreenHeight * scaleFactor);
         }
 
         private void aboutToolStripMenuItem_Click(object sender, EventArgs e)

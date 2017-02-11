@@ -5,14 +5,16 @@ namespace Samurai
 {
     partial class Debugger : Form
     {
-        Chip8CPU CPU;
+        Chip8System Chip8VM;
 
-        public Debugger(Chip8CPU cpu)
+        public Debugger(Chip8System chip8vm)
         {
             InitializeComponent();
-            CPU = cpu;
+            Chip8VM = chip8vm;
         }
 
+        // To stop issues with closing/spawning the debugger over and over.
+        // It can still be hidden/shown using a button on the form.
         private void Debugger_FormClosing(object sender, FormClosingEventArgs e)
         {
             if (e.CloseReason == CloseReason.UserClosing)
@@ -37,7 +39,7 @@ namespace Samurai
 
         private void stepButton_Click(object sender, EventArgs e)
         {
-            CPU.Step();
+            Chip8VM.Step();
             UpdateDebugger();
         }
 
