@@ -22,7 +22,11 @@ namespace Samurai
         public byte[] Registers { get; private set; }
         public ushort PC { get; private set; }
         public ushort Indexer { get; private set; }
-        public bool Flag { get; private set; }
+        public bool Flag
+        {
+            get { return Registers[0xF] == 1; }
+            set { Registers[0xF] = (byte)(value ? 1 : 0); }
+        }
 
         // Timers
         public byte Delay { get; private set; }
